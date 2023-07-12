@@ -31,6 +31,7 @@ public class Notification {
     private String image;
     private ZonedDateTime createdDate;
     private Boolean isRead;
+    @Enumerated(EnumType.STRING)
     private NotificationType type;
     @ManyToMany(cascade = {
             CascadeType.DETACH,
