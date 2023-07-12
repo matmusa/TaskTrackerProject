@@ -70,7 +70,10 @@ public class User implements UserDetails {
                     CascadeType.REFRESH},
             mappedBy = "users")
     private List<Board>boards;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<UserWorkSpaceRole>userWorkSpaceRoles;
     @Override
@@ -107,25 +110,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
