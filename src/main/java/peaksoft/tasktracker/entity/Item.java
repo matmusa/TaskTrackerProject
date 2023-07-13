@@ -25,6 +25,7 @@ public class Item {
     private Long id;
     private String title;
     private Boolean isDone;
+
     @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.MERGE,

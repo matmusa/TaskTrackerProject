@@ -24,11 +24,13 @@ public class UserWorkSpaceRole {
             allocationSize = 1)
     private Long id;
     private Role role;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private User user;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

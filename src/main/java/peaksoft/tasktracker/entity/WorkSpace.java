@@ -28,15 +28,18 @@ public class WorkSpace {
     private Long id;
     private String name;
     private Long adminId;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
     List<User> users;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "workSpace")
     private List<Board> boards;
+
     @OneToOne(cascade = CascadeType.ALL,
             mappedBy = "workSpace")
     private Favorite favorite;

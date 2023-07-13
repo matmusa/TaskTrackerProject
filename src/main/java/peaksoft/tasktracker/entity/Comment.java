@@ -27,11 +27,13 @@ public class Comment {
     private Long id;
     private String comment;
     private ZonedDateTime createdDate;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private Card card;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

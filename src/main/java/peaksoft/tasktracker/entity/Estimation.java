@@ -29,11 +29,13 @@ public class Estimation {
     private ZonedDateTime startDate;
     private ZonedDateTime dueDate;
     private ZonedDateTime time;
+
     @OneToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private Card card;
+
     @OneToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

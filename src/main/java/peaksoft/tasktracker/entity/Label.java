@@ -27,6 +27,7 @@ public class Label {
     private Long id;
     private String labelName;
     private String color;
+
     @ManyToMany(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

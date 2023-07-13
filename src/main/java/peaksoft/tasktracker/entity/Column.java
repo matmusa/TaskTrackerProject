@@ -27,16 +27,19 @@ public class Column {
     private Long id;
     private String title;
     private Boolean isArchive;
+
     @ManyToMany(
             cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private List<User> users;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "column")
     private List<Card> cards;
+
     @ManyToOne(
             cascade = {
             CascadeType.DETACH,
