@@ -15,7 +15,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(new Components()
                         .addSecuritySchemes(API_KEY, apiKeySecuritySchema()))
-                .info(new Info().title("Restaurant"))
+                .info(new Info().title("Task Tracker"))
                 .security(Collections.singletonList(new SecurityRequirement().addList(API_KEY)));
     }
     public SecurityScheme apiKeySecuritySchema() {
