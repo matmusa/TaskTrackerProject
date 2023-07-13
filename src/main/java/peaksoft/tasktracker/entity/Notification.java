@@ -51,10 +51,4 @@ public class Notification {
     private Estimation estimation;
 
 
-
-
-
-
-
-
 }
