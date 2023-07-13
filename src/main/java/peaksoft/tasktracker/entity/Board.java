@@ -27,22 +27,26 @@ public class Board {
     private Long id;
     private String title;
     private String backGround;
+
     @OneToOne(
                     cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
                     mappedBy = "board")
     private Favorite favorite;
+
     @ManyToOne(
             cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
    private WorkSpace workSpace;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
    private List<User>users;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "board")

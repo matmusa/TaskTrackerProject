@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setFirstName(signUpRequest.firstName());
         user.setLastName(signUpRequest.lastName());
         user.setEmail(signUpRequest.email());
-        user.setPassword(signUpRequest.password());
+        user.setPassword(passwordEncoder.encode(signUpRequest.password()));
         user.setImage("Default image");
         user.setRole(Role.ADMIN);
         userRepository.save(user);
@@ -58,7 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user=userRepository.getUserByEmail(signInRequest.email())
                 .orElseThrow(()-> new EntityExistsException(String.format("User with email : %s not found !",signInRequest.email())));
 
-    if(!passwordEncoder.matches(signInRequest.password(), user.getPassword())){
+    if(!passwordEncoder.matches(signInRequest.password(),user.getPassword())){
         throw new BadCredentialException("Incorrect password !");
     }
 

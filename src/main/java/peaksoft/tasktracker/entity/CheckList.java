@@ -27,10 +27,12 @@ public class CheckList {
     private Long id;
     private String description;
     private int percent;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "checkList")
     private List<Item>items;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.REFRESH,

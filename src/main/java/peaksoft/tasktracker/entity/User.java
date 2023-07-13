@@ -32,38 +32,45 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String image;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
     private List<WorkSpace> workSpaces;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "user")
     private List<Favorite> favorites;
+
     @ManyToMany (
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
     private List<Column>columns;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
     private List<Card>cards;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
     private List<Notification>notifications;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "user")
     private List<Comment>comments;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,

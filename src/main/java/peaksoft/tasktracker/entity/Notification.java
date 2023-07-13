@@ -33,16 +33,19 @@ public class Notification {
     private Boolean isRead;
     @Enumerated(EnumType.STRING)
     private NotificationType type;
+
     @ManyToMany(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private List<User>users;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private Card card;
+
     @OneToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

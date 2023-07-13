@@ -23,16 +23,19 @@ public class Favorite {
             allocationSize = 1
     )
     private Long id;
+
     @OneToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private Board board;
+
     @ManyToOne (cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private User user;
+
     @OneToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

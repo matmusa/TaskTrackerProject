@@ -28,18 +28,21 @@ public class Card {
     private String title;
     private String description;
     private Boolean isArchive;
+
     @ManyToMany(
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
     List<User> users;
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
     mappedBy = "cards")
     List<Label> labels;
+
     @OneToMany(
             cascade = {
                     CascadeType.DETACH,
@@ -48,21 +51,26 @@ public class Card {
             mappedBy = "card"
     )
     private List<Notification> notifications;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "card")
-    private List<Attachment> attechments;
+    private List<Attachment> attachments;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "card")
     private List<Comment> comments;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "card")
     private List<CheckList> checkLists;
+
     @OneToOne(cascade = CascadeType.ALL,
             mappedBy = "card")
     private Estimation estimation;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
