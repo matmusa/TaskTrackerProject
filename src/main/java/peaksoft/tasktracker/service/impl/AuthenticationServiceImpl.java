@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setRole(Role.ADMIN);
         userRepository.save(user);
 
-        String jwtToken= jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .email(user.getEmail())
@@ -51,24 +51,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse signIn(SignInRequest signInRequest) {
-      if(signInRequest.email().isBlank()){
+        if (signInRequest.email().isBlank()) {
 
-          throw new BadCredentialException("Email doesn't exist!");
-      }
-        User user=userRepository.getUserByEmail(signInRequest.email())
-                .orElseThrow(()-> new EntityExistsException(String.format("User with email : %s not found !",signInRequest.email())));
+            throw new BadCredentialException("Email doesn't exist!");
+        }
+        User user = userRepository.getUserByEmail(signInRequest.email())
+                .orElseThrow(() -> {
+                    log.error(String.format("User with email : %s not found !", signInRequest.email()));
+                    return new EntityExistsException(String.format("User with email : %s not found !", signInRequest.email()));
+                });
 
-    if(!passwordEncoder.matches(signInRequest.password(),user.getPassword())){
-        throw new BadCredentialException("Incorrect password !");
-    }
+        if (!passwordEncoder.matches(signInRequest.password(), user.getPassword())) {
+            log.error("Incorrect password !");
+            throw new BadCredentialException("Incorrect password !");
+        }
 
-    String jwtToken=jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
 
-    return AuthenticationResponse.builder()
-            .email(user.getEmail())
-            .role(user.getRole())
-            .token(jwtToken)
-            .build();
+        return AuthenticationResponse.builder()
+                .email(user.getEmail())
+                .role(user.getRole())
+                .token(jwtToken)
+                .build();
 
     }
 }
