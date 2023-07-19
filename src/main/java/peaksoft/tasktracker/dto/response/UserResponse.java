@@ -1,11 +1,14 @@
 package peaksoft.tasktracker.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import peaksoft.tasktracker.enums.Role;
 
+import lombok.Builder;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
 public class UserResponse{
