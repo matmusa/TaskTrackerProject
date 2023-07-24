@@ -1,7 +1,18 @@
 package peaksoft.tasktracker.dto.response;
 
-import lombok.Builder;
+import lombok.*;
+import peaksoft.tasktracker.entity.User;
 
-@Builder
-public record WorkSpaceResponse() {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class WorkSpaceResponse {
+    private Long workSpaceId;
+    private String workSpaceName;
+    private Long adminId;
+    private String adminFullName;
+    private String adminImage;
+
+
 }

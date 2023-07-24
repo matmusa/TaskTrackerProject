@@ -23,6 +23,8 @@ public class UserWorkSpaceRole {
             sequenceName = "userWorkSpaceRole_gen",
             allocationSize = 1)
     private Long id;
+    @Enumerated(EnumType.STRING
+    )
     private Role role;
 
     @ManyToOne(cascade = {
@@ -36,4 +38,7 @@ public class UserWorkSpaceRole {
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private WorkSpace workSpace;
+
+    public UserWorkSpaceRole(User inviteMember, String name, Role role) {
+    }
 }

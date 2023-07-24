@@ -1,6 +1,5 @@
 package peaksoft.tasktracker.service.impl;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +11,12 @@ import peaksoft.tasktracker.dto.request.SignUpRequest;
 import peaksoft.tasktracker.dto.response.AuthenticationResponse;
 import peaksoft.tasktracker.entity.User;
 import peaksoft.tasktracker.enums.Role;
+import peaksoft.tasktracker.exceptions.AlreadyExistException;
 import peaksoft.tasktracker.exceptions.BadCredentialException;
 import peaksoft.tasktracker.repository.UserRepository;
 import peaksoft.tasktracker.service.AuthenticationService;
+
+
 
 @Service
 @Transactional
@@ -30,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse signUp(SignUpRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.email())) {
             log.error(String.format("User with email: %s already exist!", signUpRequest.email()));
-            throw new EntityExistsException(String.format("User with email: %s already exist!", signUpRequest.email()));
+            throw new AlreadyExistException(String.format("User with email: %s already exist!", signUpRequest.email()));
         }
         User user = new User();
         user.setFirstName(signUpRequest.firstName());
@@ -58,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userRepository.getUserByEmail(signInRequest.email())
                 .orElseThrow(() -> {
                     log.error(String.format("User with email : %s not found !", signInRequest.email()));
-                    return new EntityExistsException(String.format("User with email : %s not found !", signInRequest.email()));
+                    return new AlreadyExistException(String.format("User with email : %s not found !", signInRequest.email()));
                 });
 
         if (!passwordEncoder.matches(signInRequest.password(), user.getPassword())) {
@@ -75,4 +77,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
 
     }
+
+
 }
