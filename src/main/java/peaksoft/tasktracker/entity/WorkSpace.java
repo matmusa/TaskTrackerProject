@@ -28,6 +28,7 @@ public class WorkSpace {
     private Long id;
     private String name;
     private Long adminId;
+    private Boolean isFavorite=false;
 
     @ManyToMany(
             cascade = {CascadeType.DETACH,

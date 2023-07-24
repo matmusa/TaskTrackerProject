@@ -33,6 +33,8 @@ public class User implements UserDetails {
     private String password;
     private String image;
 
+
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -118,5 +120,9 @@ public class User implements UserDetails {
         return true;
     }
 
-
+    public User(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

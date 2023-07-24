@@ -24,4 +24,5 @@ public class UserResponse {
         this.password = password;
         this.image = image;
     }
+
 }
