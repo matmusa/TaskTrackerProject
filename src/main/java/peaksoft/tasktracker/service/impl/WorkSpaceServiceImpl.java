@@ -18,16 +18,13 @@ import peaksoft.tasktracker.entity.User;
 import peaksoft.tasktracker.entity.UserWorkSpaceRole;
 import peaksoft.tasktracker.entity.WorkSpace;
 import peaksoft.tasktracker.enums.Role;
-import peaksoft.tasktracker.exceptions.AlreadyExistException;
 import peaksoft.tasktracker.exceptions.NotFoundException;
 import peaksoft.tasktracker.repository.UserRepository;
-import peaksoft.tasktracker.repository.UserWorkSpaceRoleRepository;
 import peaksoft.tasktracker.repository.WorkSpaceRepository;
 import peaksoft.tasktracker.repository.jdbcTemplateService.WorkSpaceJdbcTemplateService;
 import peaksoft.tasktracker.service.WorkSpaceService;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -37,21 +34,20 @@ import java.util.Optional;
 public class WorkSpaceServiceImpl implements WorkSpaceService {
     private final WorkSpaceRepository workSpaceRepository;
     private final JwtService jwtService;
-    private final UserWorkSpaceRoleRepository userWorkSpaceRoleRepository;
     private final UserRepository userRepository;
     private final JavaMailSender javaMailSender;
     private final WorkSpaceJdbcTemplateService workSpaceJdbcTemplateService;
 
     @Override
     public List<WorkSpaceResponse> getAllWorkSpaces() {
-      return workSpaceJdbcTemplateService.getAllWorkSpaces();
+        return workSpaceJdbcTemplateService.getAllWorkSpaces();
     }
+
     @Override
     public SimpleResponse saveWorkSpace(WorkSpaceRequest request) throws MessagingException {
         User user = jwtService.getAuthentication();
         WorkSpace workspace = new WorkSpace();
         workspace.setName(request.name());
-        workspace.setIsFavorite(false);
         workspace.setAdminId(user.getId());
         UserWorkSpaceRole userWorkSpace = new UserWorkSpaceRole();
         userWorkSpace.setUser(user);
@@ -66,13 +62,12 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
         if (!invitationEmails.isEmpty() && !invitationEmails.get(0).isBlank()) {
             for (String email : invitationEmails) {
                 if (!userRepository.existsUserByEmail(email)) {
-                    String inviteLink = "http://localhost:8080/swagger-ui/index.html#/invite-registration-api/registerUser";
                     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                     helper.setSubject(" Welcome to my workspace");
                     helper.setFrom("abduvohobuulumatmusa@gmail.com");
                     helper.setTo(email);
-                    helper.setText("/workspaceId/" + workspace.getId() + "   " + inviteLink);
+                    helper.setText("/workspaceId/" + workspace.getId() + "   " + request.link());
                     javaMailSender.send(mimeMessage);
                     log.info(String.format("WorkSpace with name %s successfully saved!", workspace.getName()));
                     return SimpleResponse.builder()
@@ -81,22 +76,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
                             .build();
                 }
             }
-//        }else {
-//            for (String email: request.emails()
-//                 ) {
-//                Optional<User> userOptional = Optional.ofNullable(userRepository.getUserByEmail(email)
-//                        .orElseThrow(() -> new AlreadyExistException("User with email doesnt exist!")));
-//                if (userOptional.isPresent()) {
-//                    User user1 = userOptional.get();
-//                    ;
-//                    UserWorkSpaceRole workSpaceRole = new UserWorkSpaceRole();
-//                    workSpaceRole.setRole(Role.MEMBER);
-//                    workSpaceRole.setWorkSpace(workspace);
-//                    workSpaceRole.setUser(user1);
-//                    userWorkSpaceRoleRepository.save(workSpaceRole);
-                }
-
-
+        }
         log.info("Email doesn't exist !");
         return SimpleResponse.builder()
                 .status(HttpStatus.OK)

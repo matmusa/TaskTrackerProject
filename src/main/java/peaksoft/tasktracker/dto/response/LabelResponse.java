@@ -1,9 +1,18 @@
 package peaksoft.tasktracker.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public record LabelResponse(
+public class LabelResponse {
 
-) {
+    private Long labelId;
+    private String labelName;
+    private String labelColor;
+
 }

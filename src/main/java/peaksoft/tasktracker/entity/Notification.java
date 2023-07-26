@@ -24,7 +24,8 @@ public class Notification {
     @SequenceGenerator(
             name = "notification_gen",
             sequenceName = "notification_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String  text;

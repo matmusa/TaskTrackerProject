@@ -4,7 +4,8 @@ import java.util.List;
 
 public record WorkSpaceRequest(
         String name,
-        List<String> emails
+        List<String> emails,
+        String link
 
 ) {
 }

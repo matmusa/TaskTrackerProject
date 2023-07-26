@@ -22,7 +22,8 @@ public class Board {
     @SequenceGenerator(
             name = "board_gen",
             sequenceName = "board_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String title;

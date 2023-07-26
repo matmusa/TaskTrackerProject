@@ -20,7 +20,8 @@ public class Favorite {
     @SequenceGenerator(
             name = "favorites_gen",
             sequenceName = "favorites_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
 

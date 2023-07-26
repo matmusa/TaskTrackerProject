@@ -20,7 +20,8 @@ public class Item {
     @SequenceGenerator(
             name = "item_gen",
             sequenceName = "item_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String title;

@@ -22,7 +22,8 @@ public class Attachment {
     @SequenceGenerator(
             name = "attachment_gen",
             sequenceName = "attachment_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String documentLink;
