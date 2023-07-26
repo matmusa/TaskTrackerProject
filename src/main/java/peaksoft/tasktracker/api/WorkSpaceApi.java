@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/work_spaces")
+@RequestMapping("api/work_spaces")
 @RequiredArgsConstructor
 @Tag(name = "Workspace API", description = "All workspace endpoints")
 public class WorkSpaceApi {

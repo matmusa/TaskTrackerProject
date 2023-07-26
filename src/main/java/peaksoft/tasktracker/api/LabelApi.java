@@ -12,7 +12,7 @@ import peaksoft.tasktracker.service.LabelService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/labels")
+@RequestMapping("api/labels")
 @RequiredArgsConstructor
 @Tag(name = "Labels API", description = "All labels endpoints")
 public class LabelApi {
