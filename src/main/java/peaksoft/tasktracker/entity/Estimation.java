@@ -22,7 +22,8 @@ public class Estimation {
     @SequenceGenerator(
             name = "estimation_gen",
             sequenceName = "estimation_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String reminder;

@@ -22,7 +22,8 @@ public class Label {
     @SequenceGenerator(
             name = "label_gen",
             sequenceName = "label_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String labelName;
@@ -33,4 +34,15 @@ public class Label {
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private List<Card>cards;
+
+    public Label(String labelName, String color, List<Card> cards) {
+        this.labelName = labelName;
+        this.color = color;
+        this.cards = cards;
+    }
+
+    public Label(String labelName, String color) {
+        this.labelName = labelName;
+        this.color = color;
+    }
 }

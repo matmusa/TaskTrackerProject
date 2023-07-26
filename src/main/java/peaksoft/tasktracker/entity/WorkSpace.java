@@ -23,14 +23,14 @@ public class WorkSpace {
     @SequenceGenerator(
             name = "workSpace_gen",
             sequenceName = "workSpace_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String name;
     private Long adminId;
-    private Boolean isFavorite=false;
 
-    @ManyToMany(
+    @ManyToMany(mappedBy = "workSpaces",
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})

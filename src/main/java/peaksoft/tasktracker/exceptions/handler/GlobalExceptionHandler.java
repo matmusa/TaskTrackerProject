@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
-import peaksoft.tasktracker.exceptions.AlreadyExistException;
-import peaksoft.tasktracker.exceptions.BadCredentialException;
-import peaksoft.tasktracker.exceptions.ExceptionResponse;
-import peaksoft.tasktracker.exceptions.NotFoundException;
+import peaksoft.tasktracker.exceptions.*;
 
 
 @RestControllerAdvice
@@ -34,7 +31,9 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(HttpClientErrorException.BadRequest.class)
+
+
+    @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse badRequest(HttpClientErrorException.BadRequest e){
         return ExceptionResponse.builder()

@@ -22,7 +22,8 @@ public class Comment {
     @SequenceGenerator(
             name = "comment_gen",
             sequenceName = "comment_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String comment;

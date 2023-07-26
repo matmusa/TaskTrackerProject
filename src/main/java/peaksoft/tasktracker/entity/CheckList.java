@@ -22,7 +22,8 @@ public class CheckList {
     @SequenceGenerator(
             name = "checkList_gen",
             sequenceName = "checkList_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String description;

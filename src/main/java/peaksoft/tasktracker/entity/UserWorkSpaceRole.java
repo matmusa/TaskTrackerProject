@@ -8,7 +8,7 @@ import lombok.Setter;
 import peaksoft.tasktracker.enums.Role;
 
 @Entity
-@Table(name = "userWorkSpaceRole")
+@Table(name = "userWorkSpaceRoles")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +21,8 @@ public class UserWorkSpaceRole {
     @SequenceGenerator(
             name = "userWorkSpaceRole_gen",
             sequenceName = "userWorkSpaceRole_gen",
-            allocationSize = 1)
+            allocationSize = 1,
+            initialValue = 6)
     private Long id;
     @Enumerated(EnumType.STRING
     )
@@ -39,6 +40,9 @@ public class UserWorkSpaceRole {
             CascadeType.REFRESH})
     private WorkSpace workSpace;
 
-    public UserWorkSpaceRole(User inviteMember, String name, Role role) {
+    public UserWorkSpaceRole(Role role, User user, WorkSpace workSpace) {
+        this.role = role;
+        this.user = user;
+        this.workSpace = workSpace;
     }
 }

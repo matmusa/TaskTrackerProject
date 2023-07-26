@@ -25,7 +25,8 @@ public class User implements UserDetails {
     @SequenceGenerator(
             name = "user_gen",
             sequenceName = "user_seq",
-            allocationSize = 1)
+            allocationSize = 1,
+            initialValue = 6)
     private Long id;
     private String firstName;
     private String lastName;
@@ -34,12 +35,10 @@ public class User implements UserDetails {
     private String image;
 
 
-
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
-                    CascadeType.REFRESH},
-            mappedBy = "users")
+                    CascadeType.REFRESH})
     private List<WorkSpace> workSpaces;
 
     @OneToMany(
@@ -47,44 +46,45 @@ public class User implements UserDetails {
             mappedBy = "user")
     private List<Favorite> favorites;
 
-    @ManyToMany (
+    @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
-    private List<Column>columns;
+    private List<Column> columns;
 
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
-    private List<Card>cards;
+    private List<Card> cards;
 
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
-    private List<Notification>notifications;
+    private List<Notification> notifications;
 
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "user")
-    private List<Comment>comments;
+    private List<Comment> comments;
 
     @ManyToMany(
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH},
             mappedBy = "users")
-    private List<Board>boards;
+    private List<Board> boards;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<UserWorkSpaceRole>userWorkSpaceRoles;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<UserWorkSpaceRole> userWorkSpaceRoles;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

@@ -22,7 +22,8 @@ public class Card {
     @SequenceGenerator(
             name = "card_gen",
             sequenceName = "card_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 6
     )
     private Long id;
     private String title;

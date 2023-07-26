@@ -8,11 +8,12 @@ import peaksoft.tasktracker.entity.User;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkSpaceResponse {
+
     private Long workSpaceId;
     private String workSpaceName;
     private Long adminId;
     private String adminFullName;
     private String adminImage;
-
+    private Boolean isFavorite;
 
 }

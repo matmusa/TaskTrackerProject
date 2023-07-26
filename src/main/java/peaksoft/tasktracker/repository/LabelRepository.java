@@ -5,4 +5,5 @@ import peaksoft.tasktracker.entity.Label;
 
 public interface LabelRepository extends JpaRepository<Label,Long> {
 
+
 }

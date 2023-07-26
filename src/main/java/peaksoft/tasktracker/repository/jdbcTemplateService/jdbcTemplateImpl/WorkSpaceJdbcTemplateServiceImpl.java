@@ -10,7 +10,6 @@ import peaksoft.tasktracker.dto.response.BoardResponse;
 import peaksoft.tasktracker.dto.response.WorkSpaceInnerPageResponse;
 import peaksoft.tasktracker.dto.response.WorkSpaceResponse;
 import peaksoft.tasktracker.entity.User;
-import peaksoft.tasktracker.repository.WorkSpaceRepository;
 import peaksoft.tasktracker.repository.jdbcTemplateService.WorkSpaceJdbcTemplateService;
 
 import java.util.ArrayList;
@@ -25,17 +24,6 @@ public class WorkSpaceJdbcTemplateServiceImpl implements WorkSpaceJdbcTemplateSe
     private final JwtService jwtService;
     private final JdbcTemplate jdbcTemplate;
 
-    private String getAllWorkSpacesQuery() {
-        String sql = "SELECT w.id AS id, w.name AS workSpaceName," +
-                "  u.id AS userId," +
-                "  CONCAT(u.first_name, ' ', u.last_name) AS fullName" +
-                "  ,u.image as image" +
-                "  FROM work_spaces AS w" +
-                " JOIN users AS u ON w.admin_id = u.id" +
-                "  WHERE u.id = ?";
-        return sql;
-    }
-
     @Override
     public List<WorkSpaceResponse> getAllWorkSpaces() {
         User user = jwtService.getAuthentication();
@@ -47,23 +35,12 @@ public class WorkSpaceJdbcTemplateServiceImpl implements WorkSpaceJdbcTemplateSe
                     workSpaceResponse.setAdminId(rs.getLong("userId"));
                     workSpaceResponse.setAdminFullName(rs.getString("fullName"));
                     workSpaceResponse.setAdminImage(rs.getString("image"));
+                    workSpaceResponse.setIsFavorite(rs.getBoolean("isFavorite"));
                     return workSpaceResponse;
                 }
                 ));
         return workSpaceResponses;
     }
-
-    private String getWorkSpacesByIdQuery() {
-        String sql = "SELECT w.id AS id, w.name AS workSpaceName," +
-                "  u.id AS userId," +
-                "  CONCAT(u.first_name, ' ', u.last_name) AS fullName" +
-                "  ,u.image as image" +
-                "  FROM work_spaces AS w" +
-                " JOIN users AS u ON w.admin_id = u.id" +
-                "  WHERE u.id = ? AND w.id=?";
-        return sql;
-    }
-
     @Override
     public WorkSpaceResponse getWorkSpaceById(Long workSpaceId) {
         User user = jwtService.getAuthentication();
@@ -75,11 +52,11 @@ public class WorkSpaceJdbcTemplateServiceImpl implements WorkSpaceJdbcTemplateSe
                     workSpaceResponse1.setAdminId(rs.getLong("userId"));
                     workSpaceResponse1.setAdminFullName(rs.getString("fullName"));
                     workSpaceResponse1.setAdminImage(rs.getString("image"));
+                    workSpaceResponse1.setIsFavorite(rs.getBoolean("isFavorite"));
                     return workSpaceResponse1;
                 });
         return workSpaceResponse;
     }
-
     @Override
     public WorkSpaceInnerPageResponse getInnerPageResponse(Long id) {
         User user = jwtService.getAuthentication();
@@ -108,8 +85,15 @@ public class WorkSpaceJdbcTemplateServiceImpl implements WorkSpaceJdbcTemplateSe
         });
         return workSpaceInnerPageResponse;
     }
-
-
+    private String getAllWorkSpacesQuery() {
+        String sql = "SELECT w.id AS id,w.name AS workSpaceName,u.id AS userId," +
+                "     concat(u.first_name,'  ',u.last_name) AS fullName," +
+                "     u.image AS image,CASE WHEN f.id IS NOT NULL THEN TRUE ELSE FALSE END AS isFavorite" +
+                "     FROM work_spaces" +
+                "     AS w JOIN users AS u ON w.admin_id=u.id LEFT JOIN" +
+                "     favorites f on u.id = f.user_id where u.id=?";
+        return sql;
+    }
     private String getAllWorkSpaceInnerPageQuery() {
         String sql = "SELECT w.id AS id, w.name AS workSpaceName, " +
                 "u.id AS userId, b.id AS boardId, b.title AS title, b.back_ground AS back_ground, " +
@@ -121,6 +105,15 @@ public class WorkSpaceJdbcTemplateServiceImpl implements WorkSpaceJdbcTemplateSe
         return sql;
     }
 
+    private String getWorkSpacesByIdQuery() {
+        String sql = "SELECT w.id AS id,w.name AS workSpaceName,u.id AS userId," +
+                " concat(u.first_name,'  ',u.last_name) AS fullName," +
+                " u.image AS image,CASE WHEN f.id IS NOT NULL THEN TRUE ELSE FALSE END AS isFavorite" +
+                " FROM work_spaces" +
+                " AS w JOIN users AS u ON w.admin_id=u.id LEFT JOIN" +
+                " favorites f on u.id = f.user_id where u.id=? AND w.id=?";
+        return sql;
+    }
 
 }
 
