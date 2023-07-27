@@ -40,4 +40,11 @@ public class Comment {
             CascadeType.MERGE,
             CascadeType.REFRESH})
     private User user;
+
+    public Comment(String comment, ZonedDateTime createdDate, Card card, User user) {
+        this.comment = comment;
+        this.createdDate = createdDate;
+        this.card = card;
+        this.user = user;
+    }
 }
